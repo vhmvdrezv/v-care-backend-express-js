@@ -1,0 +1,1 @@
+2024-10-26	22:46:47	0a4cd715-969a-483a-a7ae-34f8b2b0e048	data must be a string or Buffer and salt must either be a salt string or a number of rounds
