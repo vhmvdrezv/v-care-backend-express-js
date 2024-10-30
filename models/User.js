@@ -1,4 +1,3 @@
-import { ref } from "joi";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
@@ -47,6 +46,7 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'company'
     },
+    refreshToken: String
 }, {
     timestamps: true
 });

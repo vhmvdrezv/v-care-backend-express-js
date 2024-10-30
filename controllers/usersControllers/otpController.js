@@ -2,6 +2,8 @@ import UserOTP from "../../models/UserOTP.js";
 import otpPhoneValidator from "../../validators/otpValidators/otpPhoneValidator.js";
 import { logEvents } from "../../middlewares/logEvents.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from "../../models/User.js";
 
 export const sendOtpHandler = async (req, res) => {
     const { error } = otpPhoneValidator.validate(req.body);
@@ -49,3 +51,118 @@ export const sendOtpHandler = async (req, res) => {
         });
     }
 };
+
+export const otpConfirmHandler = async (req, res) => {
+    const { phone, otp } = req.body;
+    if (!phone || !otp) {
+        return res.status(400).json({
+            message: 'some fields missing'
+        });
+    }
+
+    try {
+        const userOTP = await UserOTP.findOne({ phone });
+        if (!userOTP) {
+            return res.status(400).json({
+                message: " خطا، دوباره تلاش کنید."
+            });
+        }
+
+        const otpVerify = await bcrypt.compare(otp, userOTP.otp);
+        if (!otpVerify) {
+            return res.status(400).json({
+                message: "کد وارد شده اشتباه است."
+            });
+        }
+
+        if (userOTP.expiresAt < Date.now()) {
+            return res.status(400).json({
+                message: 'کد منقضی شده است.'
+            })
+        }
+
+        await UserOTP.deleteMany({ phone });
+
+        const userExists = await User.findOne({ username: phone });
+
+        const accessToken = jwt.sign(
+            {
+                username: phone,
+                role: 'user'
+            },
+            process.env.ACCESS_TOKEN_SECRET_KEY,
+            {
+                expiresIn: process.env.ACCESS_TOKEN_EXPIRATION
+            }
+        );
+        const refreshToken = jwt.sign(
+            {
+                username: phone,
+            },
+            process.env.REFRESH_TOKEN_SECRET_KEY,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_EXPIRATION
+            }
+        );
+
+        if (userExists) {
+        
+            await User.findOneAndUpdate(
+                { username: phone },
+                { refreshToken }
+            );
+
+            res.cookie(
+                'refreshToken',
+                refreshToken,
+                {
+                    maxAge: 2 * 24 * 60 * 60 * 1000,
+                    //httpOnly: true ,
+                    secure: true,
+                    sameSite: 'none'
+                }
+            );
+
+            return res.status(200).json({
+                message: "User Logged In",
+                data: {
+                    accessToken
+                }
+            });
+
+            
+        } 
+            
+        await User.create({
+            username: phone,
+            phone,
+            refreshToken
+        });
+
+        res.cookie(
+            'refreshToken',
+            refreshToken,                
+            {
+                maxAge: 2 * 24 * 60 * 60 * 1000,
+                //httpOnly: true ,
+                secure: true,
+                sameSite: 'none'
+            }
+        );
+
+        return res.status(201).json({
+            message: "User Signed Up",
+            data: {
+                accessToken
+            }
+        });
+        clg
+
+    } catch (err) {
+        logEvents(err.message, 'errorLog.txt');
+        console.log(err.message);
+        res.status(500).json({
+            message: err.message
+        });
+    }
+}
