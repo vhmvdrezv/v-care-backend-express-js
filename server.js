@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import connectDB from './configs/dbConn.js';
+import verifyJWT from './middlewares/verifyJWT.js';
 
 import otpRouter from './routes/usersRouters/otpRouter.js';
 
@@ -12,7 +13,7 @@ connectDB();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get( '/', verifyJWT,(req, res) => {
     res.send('hello, world')
 });
 

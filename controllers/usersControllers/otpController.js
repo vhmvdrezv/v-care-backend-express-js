@@ -156,7 +156,6 @@ export const otpConfirmHandler = async (req, res) => {
                 accessToken
             }
         });
-        clg
 
     } catch (err) {
         logEvents(err.message, 'errorLog.txt');
