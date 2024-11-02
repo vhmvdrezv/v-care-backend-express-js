@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import connectDB from './configs/dbConn.js';
 import verifyJWT from './middlewares/verifyJWT.js';
+import cors from 'cors'
 
 import otpRouter from './routes/usersRouters/otpRouter.js';
 import { logger } from './middlewares/logEvents.js';
@@ -11,6 +12,11 @@ const PORT = process.env.PORT;
 const app = express();
 
 connectDB();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true // if you're using cookies, tokens, or sessions
+}));
 
 app.use(logger);
 
