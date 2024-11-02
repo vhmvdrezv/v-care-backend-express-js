@@ -4,6 +4,7 @@ import connectDB from './configs/dbConn.js';
 import verifyJWT from './middlewares/verifyJWT.js';
 
 import otpRouter from './routes/usersRouters/otpRouter.js';
+import { logger } from './middlewares/logEvents.js';
 
 const PORT = process.env.PORT;
 
@@ -11,7 +12,12 @@ const app = express();
 
 connectDB();
 
+app.use(logger);
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 
 app.get( '/', verifyJWT,(req, res) => {
     res.send('hello, world')
