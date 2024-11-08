@@ -4,6 +4,7 @@ import connectDB from './configs/dbConn.js';
 import verifyJWT from './middlewares/verifyJWT.js';
 import cors from 'cors'
 
+import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
 import { logger } from './middlewares/logEvents.js';
 
@@ -13,10 +14,7 @@ const app = express();
 
 connectDB();
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true // if you're using cookies, tokens, or sessions
-}));
+app.use(cors());
 
 app.use(logger);
 
@@ -25,11 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.get( '/', verifyJWT,(req, res) => {
+app.get( '/',(req, res) => {
     res.send('hello, world')
 });
 
 app.use('/api/otp', otpRouter);
+
+app.use('/api/user', userRouter);
 
 mongoose.connection.once('open', () => {
     console.log('mongoDB connected');
