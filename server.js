@@ -8,6 +8,7 @@ import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
 import cityRouter from './routes/cityRouter.js';
 import refreshTokenRouter from './routes/refreshTokenRouter.js';
+import citiesRouter from './routes/citiesRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 
@@ -38,6 +39,8 @@ app.use('/api/user', userRouter);
 app.use('/api/refreshtoken', refreshTokenRouter);
 
 app.use('/api/city', cityRouter);
+
+app.use('/api/cities', citiesRouter);
 
 
 mongoose.connection.once('open', () => {
