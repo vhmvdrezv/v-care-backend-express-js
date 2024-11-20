@@ -1,5 +1,4 @@
-import { required } from "joi";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const citySchema = new Schema({
     name: {
@@ -8,8 +7,11 @@ const citySchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'inactive']
+        enum: ['active', 'inactive'],
+        default: 'active'
     }
 },{
     timestamps: true
 });
+
+export default mongoose.model('city', citySchema);

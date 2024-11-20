@@ -6,3 +6,7 @@
 2024-10-30	14:33:07	dc25c273-88aa-4b6e-b2ae-3dc011b7c987	Cannot access 'userExists' before initialization
 2024-10-30	14:34:38	8d2d9bc1-654b-42d8-8edd-73df7a780426	Cannot access 'userExists' before initialization
 2024-10-30	14:35:26	9c92da51-f926-4a7f-893a-f955ab6ee2fb	Cannot read properties of null (reading 'username')
+2024-11-19	19:29:00	126ba2b5-76da-40d1-ac4f-dd6b78378c15	cities.length is not a function
+2024-11-19	19:31:38	2878ed7d-1781-42da-a03e-55e1272ca9a4	cities.length is not a function
+2024-11-19	19:32:19	78ef6439-f211-411e-ad30-5195a010403e	cities.length is not a function
+2024-11-19	19:32:22	4339aabe-b05f-49d6-8717-67545a715a39	cities.length is not a function
