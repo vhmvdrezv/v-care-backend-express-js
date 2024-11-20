@@ -4,6 +4,7 @@ import { logEvents } from "../../middlewares/logEvents.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from "../../models/User.js";
+import { createAccessToken, createRefreshToken } from "../../utils/tokenUtils.js";
 
 export const sendOtpHandler = async (req, res) => {
     const { error } = otpPhoneValidator.validate(req.body);
@@ -85,27 +86,16 @@ export const otpConfirmHandler = async (req, res) => {
 
         const userExists = await User.findOne({ username: phone });
 
-        const accessToken = jwt.sign(
-            {
-                username: phone,
-                role: 'user'
-            },
-            process.env.ACCESS_TOKEN_SECRET_KEY,
-            {
-                expiresIn: process.env.ACCESS_TOKEN_EXPIRATION
-            }
-        );
-        const refreshToken = jwt.sign(
-            {
-                username: phone,
-            },
-            process.env.REFRESH_TOKEN_SECRET_KEY,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_EXPIRATION
-            }
-        );
+        const accessToken = createAccessToken({ username: phone, role: "user" });
+        const refreshToken = createRefreshToken({ username: phone });
 
         if (userExists) {
+
+            if (user.status !== 'active') {
+                return res.status(401).json({
+                    message: "کاربر غیر فعال است."
+                })
+            };
         
             await User.findOneAndUpdate(
                 { username: phone },
@@ -136,6 +126,7 @@ export const otpConfirmHandler = async (req, res) => {
         await User.create({
             username: phone,
             phone,
+            role: "user",
             refreshToken
         });
 

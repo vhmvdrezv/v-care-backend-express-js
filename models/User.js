@@ -46,7 +46,16 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'company'
     },
-    refreshToken: String
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: "active"
+    },
+    refreshToken: {
+        type: String, 
+        unique: true, // Must be unique
+        sparse: true  // Ensures uniqueness applies only to non-null values
+    }
 }, {
     timestamps: true
 });
