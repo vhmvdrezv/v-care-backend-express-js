@@ -15,7 +15,9 @@ const verifyJWT = async (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET_KEY,
         (error, decoded) => {
             if (error) {
-                console.log(error);
+                return res.status(401).json({
+                    message: "توکن خراب است یا منقضی شده است."
+                })
             } else {
                 req.username = decoded.username;
                 req.role = decoded.role;

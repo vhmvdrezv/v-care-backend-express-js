@@ -5,5 +5,7 @@ const router = express.Router();
 
 router.get('/', verifyJWT, controller.getUserProfile);
 
+router.patch('/', verifyJWT, controller.updateUserProfile)
+
 export default router;
 

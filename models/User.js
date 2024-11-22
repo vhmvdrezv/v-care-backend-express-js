@@ -8,21 +8,32 @@ const userSchema = new Schema({
         required: true
     },
     password: String, // for siteAdmin and companyAdmin
-    firstname: String,
-    lastname: String,
+    firstname: {
+        type: String,
+        minlength: 2,
+        maxLength: 20
+    },
+    lasttname: {
+        type: String,
+        minlength: 2,
+        maxLength: 20
+    },
     age: { // for user
-        type: Number 
+        type: Number,
+        min: 12,
+        max: 100
     },
     gender: { // for user
         type: String,
-        enum: ['male', 'female']
+        enum: ['مرد', 'زن']
     },
     city: { // for user
         type: mongoose.Types.ObjectId,
         ref: 'city'
     },
     address: { // for user
-        type: String
+        type: String,
+        maxLength: 1000
     },
     phone: { // for user
         type: String,

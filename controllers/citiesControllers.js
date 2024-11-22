@@ -35,7 +35,7 @@ export const addCityHandler = async (req, res) => {
     const { error } = addCityValidator.validate(req.body);
     if (error) {
         return res.status(400).json({
-            message: error
+            message: error.message
         });
     }
 
