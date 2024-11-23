@@ -53,16 +53,20 @@ export const updateUserProfile = async (req, res) => {
             username: req.username
         },{
             firstname: req.body.firstname,
-            lasttname: req.body.lastname,
+            lastname: req.body.lastname,
             age: req.body.age,
             gender: req.body.gender,
             city: req.body.city
+        }, {
+            new: true
         })
+
+        console.log(req.body);
 
         return res.status(200).json({
             message: "کاربر با موقفیت ویرایش شد.",
             data: {
-                user
+                user: updatedUser
             }
         })
     } catch (err) {
