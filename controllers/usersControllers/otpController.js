@@ -91,7 +91,7 @@ export const otpConfirmHandler = async (req, res) => {
 
         if (userExists) {
 
-            if (user.status !== 'active') {
+            if (userExists.status !== 'active') {
                 return res.status(401).json({
                     message: "کاربر غیر فعال است."
                 })
