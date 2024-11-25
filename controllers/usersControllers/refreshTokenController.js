@@ -1,7 +1,7 @@
-import User from "../models/User.js";
+import User from "../../models/User.js";
 import jwt from 'jsonwebtoken'
-import { createAccessToken } from "../utils/tokenUtils.js";
-import { logEvents } from "../middlewares/logEvents.js";
+import { createAccessToken } from "../../utils/tokenUtils.js";
+import { logEvents } from "../../middlewares/logEvents.js";
 
 
 export const refreshTokenHandler = async (req, res) => {

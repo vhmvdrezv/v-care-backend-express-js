@@ -7,8 +7,9 @@ import cors from 'cors'
 import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
 import cityRouter from './routes/cityRouter.js';
-import refreshTokenRouter from './routes/refreshTokenRouter.js';
+import refreshTokenRouter from './routes/usersRouters/refreshTokenRouter.js';
 import citiesRouter from './routes/citiesRouter.js';
+import logOutRouter from './routes/usersRouters/logOutRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 
@@ -35,6 +36,8 @@ app.get( '/',(req, res) => {
 app.use('/api/otp', otpRouter);
 
 app.use('/api/user', userRouter);
+
+app.use('/api/logout', logOutRouter);
 
 app.use('/api/refreshtoken', refreshTokenRouter);
 
