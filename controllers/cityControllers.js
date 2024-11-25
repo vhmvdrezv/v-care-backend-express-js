@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 export const getAllCities = async (req, res) => {
     try {
         const cities = await City.find({ status: "active" });
-        console.log(cities);        
+        //console.log(cities);        
         if (cities.length === 0) {
             return res.status(200).json({
                 message: "شهری یافت نشد.",

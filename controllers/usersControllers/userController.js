@@ -53,7 +53,7 @@ export const updateUserProfile = async (req, res) => {
             username: req.username
         },{
             firstname: req.body.firstname,
-            lasttname: req.body.lastname,
+            lastname: req.body.lastname,
             age: req.body.age,
             gender: req.body.gender,
             city: req.body.city,
