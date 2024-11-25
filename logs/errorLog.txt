@@ -14,3 +14,6 @@
 2024-11-22	15:09:01	e27ccb82-debb-407d-92d3-1df77fa3f976	user is not defined
 2024-11-25	12:52:58	df03d4ed-3500-428a-a518-0a86654750a0	user is not defined
 2024-11-25	12:53:28	ca9b795d-6bab-46ed-af5a-feea66aac777	user is not defined
+2024-11-25	18:41:29	97be2802-a480-4388-a26e-ad475a8fe769	Cannot read properties of null (reading 'username')
+2024-11-25	18:41:34	03621736-1cca-44ab-81c5-119f01b3293b	Cannot read properties of null (reading 'username')
+2024-11-25	18:42:50	504e568c-3cbc-430a-9edc-cf5dac51be47	Cannot read properties of null (reading 'username')

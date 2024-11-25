@@ -12,6 +12,7 @@ export const refreshTokenHandler = async (req, res) => {
         })
     }
 
+
     // if (!refreshToken.startsWith('Bearer ')) {
     //     return res.status(401).json({
     //         message: "refreshToken not valid"
@@ -20,6 +21,11 @@ export const refreshTokenHandler = async (req, res) => {
 
     try {
         const user = await User.findOne({ refreshToken });
+        if (!user) {
+            return res.status(400).json({
+                message: "توکن نامتعبر"
+            })
+        }
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY, (err, decoded) => {
             if (err || decoded.username !== user.username) {
                 return res.status(401).json({
