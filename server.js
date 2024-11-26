@@ -12,6 +12,7 @@ import citiesRouter from './routes/citiesRouter.js';
 import logOutRouter from './routes/usersRouters/logOutRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
+import credentials from './middlewares/credentials.js';
 
 const PORT = process.env.PORT;
 
@@ -25,6 +26,9 @@ app.use(logger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+app.use(credentials);
 
 // parsing cookie
 app.use(cookieParser())
