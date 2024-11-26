@@ -20,15 +20,14 @@ const app = express();
 
 connectDB();
 
+app.use(credentials);
+
 app.use(cors());
 
 app.use(logger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-app.use(credentials);
 
 // parsing cookie
 app.use(cookieParser())
