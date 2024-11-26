@@ -10,6 +10,7 @@ import cityRouter from './routes/cityRouter.js';
 import refreshTokenRouter from './routes/usersRouters/refreshTokenRouter.js';
 import citiesRouter from './routes/citiesRouter.js';
 import logOutRouter from './routes/usersRouters/logOutRouter.js';
+import articlesRouter from './routes/articlesRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
@@ -47,6 +48,8 @@ app.use('/api/refreshtoken', refreshTokenRouter);
 app.use('/api/city', cityRouter);
 
 app.use('/api/cities', citiesRouter);
+
+app.use('/api/articles', articlesRouter);
 
 
 mongoose.connection.once('open', () => {
