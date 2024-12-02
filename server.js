@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import connectDB from './configs/dbConn.js';
 import verifyJWT from './middlewares/verifyJWT.js';
 import cors from 'cors'
+import path from 'path';
+import url from 'url';
 
 import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
@@ -11,11 +13,17 @@ import refreshTokenRouter from './routes/usersRouters/refreshTokenRouter.js';
 import citiesRouter from './routes/citiesRouter.js';
 import logOutRouter from './routes/usersRouters/logOutRouter.js';
 import articlesRouter from './routes/articlesRouter.js';
+import uploadArticleImageBodyRouter from './routes/uploadArticleImageBodyRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
 
 const PORT = process.env.PORT;
+
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
 
@@ -33,7 +41,9 @@ app.use(express.urlencoded({ extended: true }));
 // parsing cookie
 app.use(cookieParser())
 
-app.get( '/',(req, res) => {
+app.use('/media', express.static(path.join(__dirname, 'media')));
+
+app.get('/',(req, res) => {
     res.send('hello, world')
 });
 
@@ -50,6 +60,8 @@ app.use('/api/city', cityRouter);
 app.use('/api/cities', citiesRouter);
 
 app.use('/api/articles', articlesRouter);
+
+app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 
 
 mongoose.connection.once('open', () => {
