@@ -9,11 +9,15 @@ const articleSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        required: true
     },
     body: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'inactive'
     },
     author: {
         type: String,

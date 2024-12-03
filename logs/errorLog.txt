@@ -17,3 +17,5 @@
 2024-11-25	18:41:29	97be2802-a480-4388-a26e-ad475a8fe769	Cannot read properties of null (reading 'username')
 2024-11-25	18:41:34	03621736-1cca-44ab-81c5-119f01b3293b	Cannot read properties of null (reading 'username')
 2024-11-25	18:42:50	504e568c-3cbc-430a-9edc-cf5dac51be47	Cannot read properties of null (reading 'username')
+2024-12-04	01:23:01	0db905df-9a64-4566-b8c8-302369f66e5d	article is not defined
+2024-12-04	01:24:18	18bf1c3f-5170-4304-ae48-2196ce24c27e	article validation failed: imageUrl: Path `imageUrl` is required.

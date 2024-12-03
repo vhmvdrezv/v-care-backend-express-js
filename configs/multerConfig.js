@@ -68,3 +68,8 @@ const uploadArticleImageStorage = multer.diskStorage(
         }
     }
 )
+
+export const uploadArticleImage = multer({ 
+    storage: uploadArticleImageStorage,
+    fileFilter: imageFileFilter
+});
