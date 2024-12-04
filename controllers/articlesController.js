@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { logEvents } from "../middlewares/logEvents.js";
 import Article from "../models/Article.js";
 import createArticleValidator from "../validators/articleValidators/createArticleValidator.js";
@@ -94,3 +95,38 @@ export const createArticleHandler = async (req, res) => {
     }
 
 };
+
+
+export const getArticleById = async (req, res) => {
+    try {
+        const articleId = req.params.id;
+
+        if (!mongoose.isValidObjectId(articleId)) {
+            return res.status(400).json({
+                message: "آیدی مقاله اشتباه است."
+            });
+        }
+
+        const article = await Article.findById(articleId);
+        if (!article) {
+            return res.status(404).json({
+                message: "مقاله مورد نظر یافت نشد."
+            });
+        }
+
+        const baseUrl =  `${req.protocol}://${req.get('host')}`;
+
+
+        res.status(200).json({
+            ...article.toObject(),
+            imageUrl: article.imageUrl ? `${baseUrl}${article.imageUrl}` : null
+        });
+
+    } catch (err) {
+        logEvents(err.message, 'errorLog.txt');
+        console.log(err.message);
+        res.status(500).json({
+            message: err.message
+        });
+    }
+}
