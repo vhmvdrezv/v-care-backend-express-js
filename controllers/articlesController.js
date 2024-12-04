@@ -6,7 +6,7 @@ export const getAllArticles = async (req, res, next) => {
     try {
         let { status, per_page, page } = req.query;
 
-        req.role = 'admin'
+        //req.role = 'admin'
         let filter = { status: 'active' };
         if (req?.role === 'admin') {
             filter = ['active', 'inactive'].includes(status) ? { status } : { };
@@ -20,7 +20,7 @@ export const getAllArticles = async (req, res, next) => {
         const total = await Article.countDocuments(filter);
         const totalPages = Math.ceil(total / per_page);
     
-        let fullPath = req?.role === 'admin' && status ? `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?status=${status}` : `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?` 
+        let fullPath = req?.role === 'admin' && status ? `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?status=${status}&` : `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?` 
 
         let nextPage = page < totalPages ? `${fullPath}page=${page + 1}&per_page=${per_page}` : null;
         let pervPage = page > 1 ? `${fullPath}page=${page - 1}&per_page=${per_page}` : null;
