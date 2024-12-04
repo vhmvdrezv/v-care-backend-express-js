@@ -3,25 +3,41 @@ import Article from "../models/Article.js";
 import createArticleValidator from "../validators/articleValidators/createArticleValidator.js";
 
 export const getAllArticles = async (req, res, next) => {
-    const count = req.query?.count;
     try {
-        let articles;
-        if (typeof count === "number" && !Number.isNaN(count)) {
-            articles = await Article.find().limit(count);
-            return res.status(200).json({
-                message: "لیست مقالات",
-                data: {
-                    articles
-                }
-            });
-        }
+        let { status, per_page, page } = req.query;
 
-        articles = await Article.find();
+        req.role = 'admin'
+        let filter = { status: 'active' };
+        if (req?.role === 'admin') {
+            filter = ['active', 'inactive'].includes(status) ? { status } : { };
+        }
+        
+        page = isNaN(page) || page < 1 ? 1 : parseInt(page);
+        per_page = isNaN(per_page) || per_page < 2 ? 2 : parseInt(per_page);
+    
+        const articles = await Article.find(filter).skip((page - 1) * per_page).limit(per_page)
+        
+        const total = await Article.countDocuments(filter);
+        const totalPages = Math.ceil(total / per_page);
+    
+        let fullPath = req?.role === 'admin' && status ? `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?status=${status}` : `${req.protocol}://${req.get('host')}${req.baseUrl}${req.path}?` 
+
+        let nextPage = page < totalPages ? `${fullPath}page=${page + 1}&per_page=${per_page}` : null;
+        let pervPage = page > 1 ? `${fullPath}page=${page - 1}&per_page=${per_page}` : null;
+        
+        const baseUrl =  `${req.protocol}://${req.get('host')}`;
+
+        const formattedArticles = articles.map(i => ({
+            ...i.toObject(),
+            imageUrl: i.imageUrl ? `${baseUrl}${i.imageUrl}` : null
+        }));
 
         res.status(200).json({
-            message: "لیست مقالات",
+            message: "لیست مقاله ها: ",
             data: {
-                articles
+                articles: formattedArticles, 
+                nextPage, 
+                pervPage
             }
         });
     } catch (err) {

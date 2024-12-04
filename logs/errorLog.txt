@@ -19,3 +19,9 @@
 2024-11-25	18:42:50	504e568c-3cbc-430a-9edc-cf5dac51be47	Cannot read properties of null (reading 'username')
 2024-12-04	01:23:01	0db905df-9a64-4566-b8c8-302369f66e5d	article is not defined
 2024-12-04	01:24:18	18bf1c3f-5170-4304-ae48-2196ce24c27e	article validation failed: imageUrl: Path `imageUrl` is required.
+2024-12-04	16:10:07	dbd6f80d-9277-4519-8681-f0a8b51860cd	Assignment to constant variable.
+2024-12-04	16:10:24	ecdf92be-ce1b-409d-839f-0c830eac4c23	total is not defined
+2024-12-04	16:11:05	0e8a2612-ed5d-4ff1-bd12-80f364ee6632	limit is not defined
+2024-12-04	16:18:42	2ab99061-cd1f-4166-9db4-11dab61f8aef	filter is not defined
+2024-12-04	16:32:38	41682f41-d9cb-4901-8c51-d6fc047dbd02	filter is not defined
+2024-12-04	16:32:40	4b684963-3c90-4e5b-8c81-e1518f7b2ff1	filter is not defined
