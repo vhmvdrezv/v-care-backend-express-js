@@ -47,12 +47,12 @@ const userSchema = new Schema({
         type: String,
         enum: ['siteAdmin', 'companyAdmin','user']
     },
-    diseaseRecords: { // for user
-        diabetes: { type: String, enum: ['yes', 'no'], default: 'no' },
-        hypertension: { type: String, enum: ['yes', 'no'], default: 'no' },
-        heartDisease: { type: String, enum: ['yes', 'no'], default: 'no' },
-        asthma: { type: String, enum: ['yes', 'no'], default: 'no' },
-    },
+    // diseaseRecords: { // for user
+    //     diabetes: { type: String, enum: ['yes', 'no'], default: 'no' },
+    //     hypertension: { type: String, enum: ['yes', 'no'], default: 'no' },
+    //     heartDisease: { type: String, enum: ['yes', 'no'], default: 'no' },
+    //     asthma: { type: String, enum: ['yes', 'no'], default: 'no' },
+    // },
     company: { // for companyAdmin
         type: mongoose.Types.ObjectId,
         ref: 'company'
