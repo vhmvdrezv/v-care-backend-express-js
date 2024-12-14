@@ -6,6 +6,11 @@ const serviceProviderSchema = new Schema({
     services: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'service' }]
     },
+    role: {
+        type: String,
+        required: true,
+        enum: ["دکتر", "پرستار", "مراقب کودک", "مراقب سالمند"]
+    },
     firstname: {
         type: String,
         minlength: 2,
@@ -21,6 +26,10 @@ const serviceProviderSchema = new Schema({
         min: 18,
         max: 100
     },
+    rating: {
+        average: { type: Number, default: 0 },
+        count: { type: Number, default: 0 }
+    },
     gender: {
         type: String,
         required: true,
@@ -30,7 +39,7 @@ const serviceProviderSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "city"
     },
-    phone: { // for user
+    phone: {
         type: String,
         unique: true,
         required: false,
@@ -50,3 +59,5 @@ const serviceProviderSchema = new Schema({
 }, {
     timestamps: true
 });
+
+export default mongoose.model('serviceProvider', serviceProviderSchema);

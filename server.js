@@ -14,6 +14,7 @@ import citiesRouter from './routes/citiesRouter.js';
 import logOutRouter from './routes/usersRouters/logOutRouter.js';
 import articlesRouter from './routes/articlesRouter.js';
 import uploadArticleImageBodyRouter from './routes/uploadArticleImageBodyRouter.js';
+import servicesRouter from './routes/serviceRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
@@ -60,6 +61,8 @@ app.use('/api/city', cityRouter);
 app.use('/api/cities', citiesRouter);
 
 app.use('/api/articles', articlesRouter);
+
+app.use('/api/services', servicesRouter)
 
 app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 
