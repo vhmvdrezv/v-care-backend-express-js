@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import connectDB from "./configs/dbConn.js";
-import Service from "./models/Service.js";
+import connectDB from "../configs/dbConn.js";
+import Service from "../models/Service.js";
 
 
 const run = async () => {

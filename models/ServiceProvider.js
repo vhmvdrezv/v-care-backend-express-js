@@ -9,7 +9,7 @@ const serviceProviderSchema = new Schema({
     role: {
         type: String,
         required: true,
-        enum: ["دکتر", "پرستار", "مراقب کودک", "مراقب سالمند"]
+        enum: ["پزشک", "پرستار", "مراقب کودک", "مراقب سالمند"]
     },
     firstname: {
         type: String,
