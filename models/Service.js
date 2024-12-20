@@ -11,9 +11,14 @@ const serviceSchema = new Schema({
     description: {
         type: String,
     },
+    position: {
+        type: Number,
+        reqired: true,
+        unique: true
+    },
     status: {
         type: String,
-        default: 'inactive',
+        default: 'active',
         enum : ['active', 'inactive']
     }
 },{

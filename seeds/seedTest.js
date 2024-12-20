@@ -9,19 +9,19 @@ const run = async () => {
         console.log('connected to database');
 
         const services = await Service.insertMany([
-            { title: 'ویزیت پزشک عمومی', status: 'active' },
-            { title: 'پرستار مقیم', status: 'active' },
-            { title: 'تزریقات و سرم درمانی', status: 'active' },
-            { title: 'پانسمان و بخیه', status: 'active' },
-            { title: 'بازکردن گج', status: 'active' },
-            { title: 'لاواژ/گاواژ/سونداژ', status: 'active' },
-            { title: 'مراقبت از استوما', status: 'active' },
-            { title: 'نوار قلب (ECG)', status: 'active' },
-            { title: 'تست های آزمایشگاهی', status: 'active' },
-            { title: 'آمبولانس خصوصی', status: 'active' },
-            { title: 'اجاره تجهیزات', status: 'active' },
-            { title: 'مشاوره تغذیه', status: 'active' },
-            { title: 'توانبخشی', status: 'active' },
+            { title: 'ویزیت پزشک عمومی', position: 1, status: 'active' },
+            { title: 'پرستار مقیم', position: 2, status: 'active' },
+            { title: 'تزریقات و سرم درمانی', position: 3, status: 'active' },
+            { title: 'پانسمان و بخیه', position: 4, status: 'active' },
+            { title: 'بازکردن گج', position: 5, status: 'active' },
+            { title: 'لاواژ/گاواژ/سونداژ', position: 6, status: 'active' },
+            { title: 'مراقبت از استوما', position: 7, status: 'active' },
+            { title: 'نوار قلب (ECG)', position: 8, status: 'active' },
+            { title: 'تست های آزمایشگاهی', position: 9, status: 'active' },
+            { title: 'آمبولانس خصوصی', position: 10, status: 'active' },
+            { title: 'اجاره تجهیزات', position: 11, status: 'active' },
+            { title: 'مشاوره تغذیه', position: 12, status: 'active' },
+            { title: 'توانبخشی', position: 13, status: 'active' },
         ]);
         
         console.log(`Services added: ${services}`);

@@ -52,6 +52,7 @@ export const getAllServiceProviders = async (req, res) => {
             filter.city = { $in: [cityId] };
         }
 
+        // console.log(filter);
         const serviceProviders = await ServiceProvider.find(filter).populate('services').populate('city');
 
         return res.status(200).json({
