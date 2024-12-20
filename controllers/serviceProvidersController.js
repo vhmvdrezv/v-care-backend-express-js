@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 import { logEvents } from "../middlewares/logEvents.js";
 import Service from "../models/Service.js";
 import ServiceProvider from "../models/ServiceProvider.js";
+import City from "../models/City.js";
 
 
 export const getAllServiceProviders = async (req, res) => {
     try {
-        const { status, serviceId } = req.query;
+        const { status, serviceId, cityId } = req.query;
 
         const filter = {};
 
@@ -34,8 +35,24 @@ export const getAllServiceProviders = async (req, res) => {
             filter.services = { $in: [serviceId] };
         }
 
-        console.log(filter);
-        const serviceProviders = await ServiceProvider.find(filter).populate('services');
+        if (cityId) {
+            if (!mongoose.isValidObjectId(cityId)) {
+                return res.status(400).json({
+                    message: "آیدی شهر اشتباه است."
+                });
+            }
+            const city = await City.findById(cityId);
+
+            if (city?.status !== 'active') {
+                return res.status(404).json({
+                    message: "شهر مورد نظر غیر فعال است."
+                });
+            }
+
+            filter.city = { $in: [cityId] };
+        }
+
+        const serviceProviders = await ServiceProvider.find(filter).populate('services').populate('city');
 
         return res.status(200).json({
             message: "لیست خدمات دهندگان",

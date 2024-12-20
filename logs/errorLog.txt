@@ -27,3 +27,5 @@
 2024-12-04	16:32:40	4b684963-3c90-4e5b-8c81-e1518f7b2ff1	filter is not defined
 2024-12-04	23:14:08	91726b3b-8330-4a8c-adfb-abe591a8d852	i is not defined
 2024-12-17	16:12:17	494c6c0c-279b-47e1-bb84-31bb52818bcf	$in needs an array
+2024-12-18	21:29:30	d7cb686e-5ae2-44c0-80c3-77c4e6f2d6c6	Cannot access 'city' before initialization
+2024-12-18	21:30:23	6ea5bda0-ea7c-4d67-a031-1ed88b327573	Cannot access 'city' before initialization
