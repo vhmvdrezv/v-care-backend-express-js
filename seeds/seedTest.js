@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import connectDB from "../configs/dbConn.js";
+import connectDB from '../config/dbConn.js';
 import Service from "../models/Service.js";
 
 

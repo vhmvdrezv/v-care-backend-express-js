@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import connectDB from './configs/dbConn.js';
+import connectDB from './config/dbConn.js';
 import verifyJWT from './middlewares/verifyJWT.js';
 import cors from 'cors'
 import path from 'path';
@@ -16,6 +16,7 @@ import articlesRouter from './routes/articlesRouter.js';
 import uploadArticleImageBodyRouter from './routes/uploadArticleImageBodyRouter.js';
 import serviceProvidersRouter from './routes/serviceProvidersRouter.js';
 import servicesRouter from './routes/serviceRouter.js';
+import TimeSlotRouter from './routes/TimeSlotsRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
@@ -66,6 +67,8 @@ app.use('/api/articles', articlesRouter);
 app.use('/api/services', servicesRouter)
 
 app.use('/api/service-providers', serviceProvidersRouter);
+
+app.use('/api/timeslots', TimeSlotRouter)
 
 app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 

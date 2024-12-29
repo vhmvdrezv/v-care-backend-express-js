@@ -22,7 +22,7 @@ const TimeSlotSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['available', 'reserved', 'completed'],
+        enum: ['available', 'reserved', 'completed', 'inactive'],
         default: 'available',
     },
     reservedBy: {
