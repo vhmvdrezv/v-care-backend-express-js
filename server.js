@@ -72,6 +72,12 @@ app.use('/api/timeslots', TimeSlotRouter)
 
 app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 
+app.all("*", (req, res) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server`
+    });
+})
 
 mongoose.connection.once('open', () => {
     console.log('mongoDB connected');
