@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import connectDB from './config/dbConn.js';
-import verifyJWT from './middlewares/verifyJWT.js';
 import cors from 'cors'
 import path from 'path';
 import url from 'url';
