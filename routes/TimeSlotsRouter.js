@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/', controller.getAllTimeSlots);
 
-router.patch('/:timeSlotId/reserve', /*verifyJWT,*/ controller.reserveTimeSlot)
+router.patch('/:timeSlotId/reserve', verifyJWT, controller.reserveTimeSlot)
 
 export default router;

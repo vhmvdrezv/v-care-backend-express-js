@@ -82,7 +82,7 @@ export const reserveTimeSlot = async (req, res) => {
     
     try {
         
-        req.user = '674449f7686b3c14b6e20725'
+        //req.user = '674449f7686b3c14b6e20725'
         const timeSlotId = req.params.timeSlotId;
 
         if (!timeSlotId) {
