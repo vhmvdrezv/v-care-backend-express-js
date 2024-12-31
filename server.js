@@ -6,6 +6,8 @@ import cors from 'cors'
 import path from 'path';
 import url from 'url';
 
+import CustomError from './utils/customError.js';
+import globalErrorHandler from './controllers/errorController.js';
 import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
 import cityRouter from './routes/cityRouter.js';
@@ -77,20 +79,17 @@ app.all("*", (req, res, next) => {
     //     status: 'fail',
     //     message: `Can't find ${req.originalUrl} on this server`
     // });
-    const err = new Error(`Can't find ${req.originalUrl} on this server`);
-    err.status = 'fail';
-    err.statusCode = 404;
+    
+    // const err = new Error(`Can't find ${req.originalUrl} on this server`);
+    // err.status = 'fail';
+    // err.statusCode = 404;
+    // next(err);
+
+    const err = new CustomError(`Can't find ${req.originalUrl} on this server`, 404);
     next(err);
 });
 
-app.use((err, req, res, next) => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
-    res.status(err.statusCode).json({
-        status: err.statusCode,
-        message: err.message
-    })
-});
+app.use(globalErrorHandler);
 
 mongoose.connection.once('open', () => {
     console.log('mongoDB connected');
