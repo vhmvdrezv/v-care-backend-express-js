@@ -16,6 +16,8 @@ import uploadArticleImageBodyRouter from './routes/uploadArticleImageBodyRouter.
 import serviceProvidersRouter from './routes/serviceProvidersRouter.js';
 import servicesRouter from './routes/serviceRouter.js';
 import TimeSlotRouter from './routes/TimeSlotsRouter.js';
+import CustomError from './utils/customError.js';
+import globalErrorHandler from './controllers/errorController.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
@@ -71,6 +73,13 @@ app.use('/api/timeslots', TimeSlotRouter)
 
 app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 
+
+app.use('*', (req, res, next) => {
+    const error = new CustomError(`Can't find ${req.originalUrl} on this server.`, 404);
+    next(error);
+});
+
+app.use(globalErrorHandler);
 
 mongoose.connection.once('open', () => {
     console.log('mongoDB connected');
