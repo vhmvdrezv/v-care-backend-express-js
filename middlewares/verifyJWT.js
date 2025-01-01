@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
+import CustomError from '../utils/customError.js';
 
 const verifyJWT = async (req, res, next) => {
     const headerToken = req.headers.authorization;
     if (!headerToken || !headerToken.startsWith('Bearer ')) {
-        return res.status(401).json({
-            error: 'توکن صحیح نیست.'
-        });
+        const error = new CustomError('توکن را وارد نکردید یا توکن اشتباه است.', 401);
+        return next(error);
     }
 
     const jwtToken = headerToken.split(' ')[1];
@@ -15,9 +15,8 @@ const verifyJWT = async (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET_KEY,
         (error, decoded) => {
             if (error) {
-                return res.status(401).json({
-                    message: "توکن خراب است یا منقضی شده است."
-                })
+                const error = new CustomError('توکن منقضی شده است یا اشتباه است.', 401);
+                return next(error);
             } else {
                 req.username = decoded.username;
                 req.role = decoded.role;

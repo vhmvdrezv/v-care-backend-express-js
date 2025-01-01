@@ -49,18 +49,11 @@ export const uploadArticleImageBody = multer({
 const uploadArticleImageStorage = multer.diskStorage(
     {
         destination: async (req, file, cb) => {
-            try {
-                if (!fs.existsSync(path.join(__dirname, '..', 'media', 'articleImages'))) {
-                    console.log('im here ')
-                    fs.mkdirSync(path.join(__dirname, '..', 'media', 'articleImages'), { recursive: true });
-                }
-                cb(null, path.join(__dirname, '..', 'media', 'articleImages'));
-            } catch (err) {
-                logEvents(err.message, 'errorLog.txt');
-                console.log(err.message);
-                throw new Error(err.message);
+            if (!fs.existsSync(path.join(__dirname, '..', 'media', 'articleImages'))) {
+                console.log('im here ')
+                fs.mkdirSync(path.join(__dirname, '..', 'media', 'articleImages'), { recursive: true });
             }
-            
+            cb(null, path.join(__dirname, '..', 'media', 'articleImages'));
         }, 
         filename: (req, file, cb) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1000);

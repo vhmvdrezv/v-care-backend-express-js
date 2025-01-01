@@ -14,7 +14,6 @@ const optionalVerifyJWT = (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET_KEY,
         (error, decoded) => {
             if (!error) {
-                // Attach user info if token is valid
                 req.username = decoded.username;
                 req.role = decoded.role;
             } 
