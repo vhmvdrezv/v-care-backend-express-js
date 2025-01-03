@@ -18,7 +18,7 @@ const verifyJWT = async (req, res, next) => {
                 const error = new CustomError('توکن منقضی شده است یا اشتباه است.', 401);
                 return next(error);
             } else {
-                req.username = decoded.username;
+                req.userId = decoded.sub;
                 req.role = decoded.role;
                 next();
             }

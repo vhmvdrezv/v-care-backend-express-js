@@ -8,9 +8,8 @@ import asyncErrorHandler from "../../utils/asyncErrorHanlder.js";
 
 export const sendOtpHandler = asyncErrorHandler(async (req, res) => {
     const { error } = otpPhoneValidator.validate(req.body);
-    if ( error ) {
-        throw new CustomError(error.message, 400);
-    }
+    if (error) throw new CustomError(error.message, 400);
+
 
     const userOTPExists = await UserOTP.findOne({ phone: req.body.phone });
     
@@ -64,20 +63,20 @@ export const otpConfirmHandler = asyncErrorHandler(async (req, res) => {
     await UserOTP.deleteMany({ phone });
 
     const userExists = await User.findOne({ username: phone });
-
-    const accessToken = createAccessToken({ username: phone, role: "user" });
-    const refreshToken = createRefreshToken({ username: phone });
-
+    
     if (userExists) {
 
         if (userExists.status !== 'active') {
             throw new CustomError('حساب کاربری شما غیر فعال شده است.', 403);
         };
     
-        await User.findOneAndUpdate(
-            { username: phone },
+        await User.findByIdAndUpdate(
+            userExists._id,
             { refreshToken }
         );
+
+        const accessToken = createAccessToken({ sub: userExists._id, role: userExists.role });
+        const refreshToken = createRefreshToken({ sub: userExists._id });
 
         res.cookie(
             'refreshToken',
@@ -96,16 +95,20 @@ export const otpConfirmHandler = asyncErrorHandler(async (req, res) => {
                 accessToken
             }
         });
-
-        
     } 
         
-    await User.create({
+    const user = await User.create({
         username: phone,
         phone,
         role: "user",
-        refreshToken
     });
+
+    
+    const accessToken = createAccessToken({ sub: user._id, role: user.role });
+    const refreshToken = createRefreshToken({ sub: user._id });
+
+    user.refreshToken = refreshToken;
+    await user.save();
 
     res.cookie(
         'refreshToken',

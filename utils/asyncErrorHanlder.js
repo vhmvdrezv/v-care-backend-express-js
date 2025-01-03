@@ -3,4 +3,3 @@ export default (func) => {
         func(req, res, next).catch(next);
     }
 };
-

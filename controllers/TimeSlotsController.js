@@ -78,7 +78,7 @@ export const reserveTimeSlot = asyncErrorHandler(async (req, res) => {
         timeSlotId,
         {
             status: 'reserved',
-            reservedBy: req.user
+            reservedBy: req.userId
         }, 
         {
             new: true
