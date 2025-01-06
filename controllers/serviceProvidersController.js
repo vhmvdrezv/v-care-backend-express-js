@@ -36,7 +36,11 @@ export const getAllServiceProviders = asyncErrorHandler(async (req, res) => {
         filter.city = { $in: [cityId] };
     }
 
-    const serviceProviders = await ServiceProvider.find(filter).populate('services').populate('city');
+    const serviceProviders = await ServiceProvider
+                                        .find(filter)
+                                        .populate('services')
+                                        .populate('city')
+                                        .select('-_id -__v -createdAt -updatedAt');
 
     return res.status(200).json({
         message: "لیست خدمات دهندگان",
