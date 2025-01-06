@@ -40,10 +40,12 @@ export const addCityHandler = asyncErrorHandler(async (req, res) => {
         status: req.body.status
     });
 
+    const { _id , __v, createdAt, updatedAt, ...filteredCity } = city.toObject();
+
     res.status(201).json({
         message: "شهر اضافه شد.",
         data: {
-            city
+            city: filteredCity
         }
     })
 });

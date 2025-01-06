@@ -4,7 +4,7 @@ import asyncErrorHandler from '../utils/asyncErrorHanlder.js';
 import CustomError from '../utils/customError.js';
 
 export const getAllCities = asyncErrorHandler(async (req, res) => {
-    const cities = await City.find({ status: "active" });
+    const cities = await City.find({ status: "active" }).select('name')
     
     res.status(200).json({
         message: "لیست شهرها:",
@@ -17,7 +17,7 @@ export const getAllCities = asyncErrorHandler(async (req, res) => {
 export const getCityById = asyncErrorHandler(async (req, res) => {
     const cityId = req.params.cityId;
 
-    const city = await City.findById(cityId);
+    const city = await City.findById(cityId).select('name');
     if (!city) {
         throw new CustomError('شهری با این شناسه یافت نشد.', 404);
     }
