@@ -44,7 +44,7 @@ export const getAllTimeSlots = asyncErrorHandler(async (req, res) => {
         filter.status = 'available';
     }
 
-    const timeSlots = await TimeSlot.find(filter);
+    const timeSlots = await TimeSlot.find(filter).select('-__v -createdAt -updatedAt');
 
     res.status(200).json({
         message: "لیست اسلات ها",
@@ -81,8 +81,9 @@ export const reserveTimeSlot = asyncErrorHandler(async (req, res) => {
             reservedBy: req.userId
         }, 
         {
-            new: true
-        }
+            new: true,
+            select: '-__v -createdAt -updatedAt'
+        },
     );
 
     res.status(200).json({
