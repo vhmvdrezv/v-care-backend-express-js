@@ -15,7 +15,10 @@ export const getAllArticles = asyncErrorHandler( async (req, res, next) => {
     page = isNaN(page) || page < 1 ? 1 : parseInt(page);
     per_page = isNaN(per_page) || per_page < 2 ? 2 : parseInt(per_page);
 
-    const articles = await Article.find(filter).skip((page - 1) * per_page).limit(per_page)
+    const articles = await Article.find(filter)
+                                .skip((page - 1) * per_page)
+                                .limit(per_page)
+                                .select('title imageUrl body status author');
     
     const total = await Article.countDocuments(filter);
     const totalPages = Math.ceil(total / per_page);
@@ -61,17 +64,19 @@ export const createArticleHandler = asyncErrorHandler(async (req, res) => {
     } else {
         article = await Article.create({
             title: req.body.title,
-            imageUrl: null,
+            imageUrl: undefined,
             body: req.body.body,
             author: req.body.author,
             status: req.body.status
         });
     }
 
+    let { _id, __v, createdAt, updatedAt, ...filteredArticle } = article.toObject();
+
     res.status(201).json({
         message: "مقاله آپلود شد.",
         data: {
-            article
+            article: filteredArticle
         }
     })
         
