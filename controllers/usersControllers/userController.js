@@ -49,19 +49,20 @@ export const updateUserProfile = asyncErrorHandler(async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) throw new CustomErrorHandler('کاربر یافت نشد.', 404);
 
-    console.log
     const updatedUser = await User.findByIdAndUpdate(
-    req.userId,
-    {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        age: req.body.age,
-        gender: req.body.gender,
-        city: req.body.city,
-        address: req.body.address,
-    }, {
-        new: true
-    })
+            req.userId,
+        {
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            age: req.body.age,
+            gender: req.body.gender,
+            city: req.body.city,
+            address: req.body.address,
+        }, {
+            new: true,
+            select: 'firstname lastname age gender city address -_id'
+        }
+    );
 
     return res.status(200).json({
         message: "کاربر با موقفیت ویرایش شد.",
