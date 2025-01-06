@@ -70,13 +70,13 @@ export const otpConfirmHandler = asyncErrorHandler(async (req, res) => {
             throw new CustomError('حساب کاربری شما غیر فعال شده است.', 403);
         };
     
+        const accessToken = createAccessToken({ sub: userExists._id, role: userExists.role });
+        const refreshToken = createRefreshToken({ sub: userExists._id });
+
         await User.findByIdAndUpdate(
             userExists._id,
             { refreshToken }
         );
-
-        const accessToken = createAccessToken({ sub: userExists._id, role: userExists.role });
-        const refreshToken = createRefreshToken({ sub: userExists._id });
 
         res.cookie(
             'refreshToken',
