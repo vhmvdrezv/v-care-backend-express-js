@@ -16,18 +16,18 @@ import uploadArticleImageBodyRouter from './routes/uploadArticleImageBodyRouter.
 import serviceProvidersRouter from './routes/serviceProvidersRouter.js';
 import servicesRouter from './routes/serviceRouter.js';
 import TimeSlotRouter from './routes/TimeSlotsRouter.js';
+import adminRouter from './routes/adminRouter/adminRouter.js'
 import CustomError from './utils/customError.js';
 import globalErrorHandler from './controllers/errorController.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
+import verifyJWT from './middlewares/verifyJWT.js';
 
 const PORT = process.env.PORT;
 
-
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 const app = express();
 
@@ -57,6 +57,8 @@ app.use('/api/user', userRouter);
 
 app.use('/api/logout', logOutRouter);
 
+app.use('/api/admin', adminRouter)
+
 app.use('/api/refreshtoken', refreshTokenRouter);
 
 app.use('/api/city', cityRouter);
@@ -70,6 +72,8 @@ app.use('/api/services', servicesRouter)
 app.use('/api/service-providers', serviceProvidersRouter);
 
 app.use('/api/timeslots', TimeSlotRouter)
+
+//app.use('/api/users', usersRouter)
 
 app.use('/api/upload-article-image-body', uploadArticleImageBodyRouter);
 
