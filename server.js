@@ -19,6 +19,7 @@ import TimeSlotRouter from './routes/TimeSlotsRouter.js';
 import adminRouter from './routes/adminRouter/adminRouter.js'
 import CustomError from './utils/customError.js';
 import globalErrorHandler from './controllers/errorController.js';
+import usersRouter from './routes/usersRouters/usersRouter.js';
 import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
@@ -54,6 +55,8 @@ app.get('/',(req, res) => {
 app.use('/api/otp', otpRouter);
 
 app.use('/api/user', userRouter);
+
+app.use('/api/users', usersRouter);
 
 app.use('/api/logout', logOutRouter);
 
