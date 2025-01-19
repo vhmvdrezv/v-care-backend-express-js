@@ -37,7 +37,7 @@ export const getUserProfile = asyncErrorHandler(async (req, res) => {
 });
 
 export const updateUserProfile = asyncErrorHandler(async (req, res) => {
-    const { error } = req.body;
+    const { error } = updateUserProfile.validateAsync(req.body);
     if (error) throw new CustomErrorHandler(error.message, 400);
 
 

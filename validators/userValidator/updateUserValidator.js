@@ -20,5 +20,10 @@ const updateUserValidator = Joi.object({
     address: Joi.string().max(1000).messages({
         'string.base': 'آدرس باید یک رشته باشد.',
         'string.max': 'آدرس نباید بیشتر از 1000 کاراکتر باشد.'
-    })
+    }),
+    status: Joi.string().valid('active', 'inactive').messages({
+        'any.only': 'جنسیت فقط می‌تواند "مرد" یا "زن" باشد.'
+    }),
 });
+
+export default updateUserValidator;
