@@ -52,6 +52,19 @@ export const getAllUsers = asyncErrorHandler(async(req, res, next) => {
     });
 });
 
+export const getUserByID = asyncErrorHandler(async(req, res, next) => {
+    const userID = req.params.id;
+
+    const user = await User.findById(userID).select('-createdAt -updatedAt -__v -refreshToken');
+
+    res.status(200).json({
+        message: "کاربر:",
+        data: {
+            user
+        }
+    });
+});
+
 export const updateUser = asyncErrorHandler(async(req, res, next) => {
     const userID = req.params.id;
     const { firstname, lastname, age, gender, address, status, city} = req.body;

@@ -5,7 +5,9 @@ import verifyRoles from '../../middlewares/verifyRoles.js';
 
 const router = express.Router();
 
-router.get('/', verifyJWT, controller.getAllUsers);
+router.get('/', verifyJWT, verifyRoles('siteAdmin'), controller.getAllUsers);
+
+router.get('/:id', verifyJWT, verifyRoles('siteAdmin'), controller.getUserByID);
 
 router.patch('/:id', verifyJWT, verifyRoles('siteAdmin'), controller.updateUser);
 
