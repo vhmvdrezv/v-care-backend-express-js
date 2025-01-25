@@ -4,6 +4,8 @@ import connectDB from './config/dbConn.js';
 import cors from 'cors'
 import path from 'path';
 import url from 'url';
+import logger from './config/logger.js';
+import fs from 'fs';
 
 import userRouter from './routes/usersRouters/userRouter.js';
 import otpRouter from './routes/usersRouters/otpRouter.js';
@@ -20,7 +22,7 @@ import adminRouter from './routes/adminRouter/adminRouter.js'
 import CustomError from './utils/customError.js';
 import globalErrorHandler from './controllers/errorController.js';
 import usersRouter from './routes/usersRouters/usersRouter.js';
-import { logger } from './middlewares/logEvents.js';
+//import { logger } from './middlewares/logEvents.js';
 import cookieParser from 'cookie-parser';
 import credentials from './middlewares/credentials.js';
 import verifyJWT from './middlewares/verifyJWT.js';
@@ -38,7 +40,10 @@ app.use(credentials);
 
 app.use(cors());
 
+// logger middlewares 
+
 app.use(logger);
+//app.use(logger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +54,7 @@ app.use(cookieParser())
 app.use('/media', express.static(path.join(__dirname, 'media')));
 
 app.get('/',(req, res) => {
-    res.send('hello, world')
+    res.status(200).send('hello, world')
 });
 
 app.use('/api/otp', otpRouter);
