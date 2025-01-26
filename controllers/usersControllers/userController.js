@@ -1,7 +1,9 @@
-import City from "../../models/City.js"
-import User from "../../models/User.js"
-import CustomErrorHandler from '../../utils/customError.js';
+import City from "../../models/City.js";
+import User from "../../models/User.js";
+import CustomError from '../../utils/customError.js';
 import asyncErrorHandler from '../../utils/asyncErrorHanlder.js';
+import TimeSlot from '../../models/TimeSlot.js';
+import ServiceProvider from "../../models/ServiceProvider.js";
 
 export const getUserProfile = asyncErrorHandler(async (req, res) => {
 
@@ -22,7 +24,7 @@ export const getUserProfile = asyncErrorHandler(async (req, res) => {
     }
     
     if (!user) {
-        throw new CustomErrorHandler('کاربر یافت نشد.', 404);
+        throw new CustomError('کاربر یافت نشد.', 404);
     }
 
     user = user.toObject();
@@ -38,16 +40,16 @@ export const getUserProfile = asyncErrorHandler(async (req, res) => {
 
 export const updateUserProfile = asyncErrorHandler(async (req, res) => {
     const { error } = updateUserProfile.validateAsync(req.body);
-    if (error) throw new CustomErrorHandler(error.message, 400);
+    if (error) throw new CustomError(error.message, 400);
 
 
     if (req.body.city) {
         const city = await City.findById(req.body.city);
-        if (!city) throw new CustomErrorHandler('شهر یافت نشد.', 404);
+        if (!city) throw new CustomError('شهر یافت نشد.', 404);
     }
 
     const user = await User.findById(req.userId);
-    if (!user) throw new CustomErrorHandler('کاربر یافت نشد.', 404);
+    if (!user) throw new CustomError('کاربر یافت نشد.', 404);
 
     const updatedUser = await User.findByIdAndUpdate(
             req.userId,
@@ -70,4 +72,53 @@ export const updateUserProfile = asyncErrorHandler(async (req, res) => {
             user: updatedUser
         }
     })    
+});
+
+export const getUserTimeSlots = asyncErrorHandler(async(req, res, next) => {
+    let { status, page, limit } = req.query;
+    // const userId = mongoose.Types.ObjectId(req.userId); // Convert userId to ObjectId
+    const filter = { reservedBy: req.userId };
+
+    if (['reserved', 'pending'].includes(status)) filter.status = status 
+    else status = null;
+
+    const option = {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+        select: '-createdAt -updatedAt -__v',
+        populate: {
+            path: 'serviceProvider',
+            select: 'firstname lastname' // Select fields to include from the ServiceProvider collection
+        }
+    };
+
+    page = !isNaN(page) && parseInt(page) > 0  ? parseInt(page) : 1;
+    limit = !isNaN(limit) && parseInt(limit) > 0 ? parseInt(limit) : 10;
+
+    const result = await TimeSlot.paginate(filter, option);
+
+    const baseUrl = `${req.protocol}://${req.get('host')}${req.originalUrl.split('?')[0]}`;
+
+    const nextPage = result.hasNextPage
+        ? `${baseUrl}?limit=${limit}&page=${result.nextPage}${status ? `&status=${status}` : ``}`
+        : null;
+
+    const prevPage = result.hasPrevPage
+        ? `${baseUrl}?limit=${limit}&page=${result.prevPage}${status ? `&status=${status}` : ``}`
+        : null;
+
+    res.status(200).json({
+        messge: "لیست بازه های زمانی کاربر:",
+        data: {
+            timeSlots: result.docs,
+            totalItems: result.totalDocs,
+            totalPages: result.totalPages,
+            currentPage: result.page,
+            hasNextPage: result.hasNextPage,
+            hasPrevPage: result.hasPrevPage,
+            nextPage,
+            prevPage
+        }
+    });
 });

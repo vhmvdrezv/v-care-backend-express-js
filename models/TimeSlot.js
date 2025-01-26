@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const Schema = mongoose.Schema;
 
 const TimeSlotSchema = new Schema({
     serviceProvider: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ServiceProvider',
+        ref: 'serviceProvider',
         required: true
     },
     date: {
@@ -27,11 +28,13 @@ const TimeSlotSchema = new Schema({
     },
     reservedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user'
     }
 }, {
     timestamps: true
 });
+
+TimeSlotSchema.plugin(mongoosePaginate);
 
 TimeSlotSchema.index({ ServiceProvider: 1, date: 1});
 

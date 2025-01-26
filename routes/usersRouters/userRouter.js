@@ -7,5 +7,7 @@ router.get('/', verifyJWT, controller.getUserProfile);
 
 router.patch('/', verifyJWT, controller.updateUserProfile)
 
+router.get('/timeslots', verifyJWT, controller.getUserTimeSlots);
+
 export default router;
 

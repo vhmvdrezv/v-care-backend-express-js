@@ -85,7 +85,7 @@ export const updateUser = asyncErrorHandler(async(req, res, next) => {
 
     if (city) {
         const city = await City.findById(req.body.city);
-        if (!city) throw new CustomErrorHandler('شهر یافت نشد.', 404);
+        if (!city) throw new CustomError('شهر یافت نشد.', 404);
     }
 
     const updatedUser = await User.findByIdAndUpdate(

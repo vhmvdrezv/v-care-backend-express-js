@@ -1,7 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 
-const Schmea = mongoose.Schema;
-
 const serviceProviderSchema = new Schema({
     services: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'service' }]

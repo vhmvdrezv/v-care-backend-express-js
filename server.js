@@ -1,6 +1,6 @@
+import mongoose from 'mongoose';
 import app from './app.js';
 import connectDB from './config/dbConn.js';
-import mongoose from 'mongoose';
 
 const PORT = process.env.PORT || 3000;
 
